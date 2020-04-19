@@ -193,3 +193,11 @@ function addWep(id){
     game.players[id].rld = game.players[id].store = 0;
 
 }
+
+function newAI(){
+
+    if (game.players.length >= 5) document.getElementById("newAI").remove();
+    game.players.push(newPlayer(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)));
+    initAI(game.players[game.players.length - 1], "normal");
+
+}

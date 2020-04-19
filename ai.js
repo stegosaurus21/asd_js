@@ -54,7 +54,7 @@ function turret(p, ax = null, ay = null) {
     else if (t_ang - p.ang > p_delta_ang) p.ang += p_delta_ang;
     
     p.vel += Math.random() * 0.05 - 0.025;
-    playerFire(p);
+    if (p.vel > 0.1) playerFire(p);
 
 }
 
@@ -63,7 +63,7 @@ function normal(p){
     if (p.state == -1) {
 
         p.state = Math.floor(Math.random() * 4);
-        if (p.state <= 2) p.ticks = Math.floor(Math.random() * 50);
+        if (p.state <= 2) p.ticks = 20 + Math.floor(Math.random() * 30);
         else p.ticks = 100 + Math.floor(Math.random() * 100);
 
         if (p.state == 3) {
@@ -73,6 +73,7 @@ function normal(p){
             } while (weapons[p.wep].noAI)
 
             p.rld = p.store = 0;
+            p.ticks = Math.min(weapons[p.wep].rld + 10, p.ticks);
 
         } 
 
@@ -81,7 +82,7 @@ function normal(p){
     p.ticks --;
     if (p.ticks <= 0){ p.state = -1; return; }
 
-    if (p.state == 0) return;
+    if (p.state == 0) { p.ticks --; return; }
 
     if (p.state == 1) p.x += p_speed;
     if (p.state == 2) p.x -= p_speed;

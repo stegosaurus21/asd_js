@@ -81,7 +81,7 @@ function init(){
 
         defWeapons();
 
-        game.players.push(newPlayer(255, 255, 0));
+        game.players.push(newPlayer(255, 0, 0));
         game.players.push(newPlayer(0, 255, 0));
         initAI(game.players[1], "normal");
         
@@ -90,6 +90,9 @@ function init(){
         window.onkeypress = keyPress;
 
         addLog("Welcome to ASD_js! Use A/D to move, W/S to adjust power, Q/E to adjust angle, Z/X to change weapon.");
+        addLog("Works best (only works?) with Chrome.");
+
+        document.getElementById("newAI").onclick = newAI;
 
         setInterval(mainLoop, tick_int);
 

@@ -11,13 +11,13 @@ function defWeapons(){
     },
     {
         name: "Autocannon",
-        rld: 10,
+        rld: 8,
         col: '#A3A3A3',
         rad: 2,
         dmg_rad: 7,
         dmg: 15,
         store: 10,
-        store_rld: 20,
+        store_rld: 15,
         scatter: 0.1
     },
     {
@@ -129,10 +129,8 @@ function defWeapons(){
         trace_vx: 0.08,
         trace_vy: 0.06,
 
-        arc: function (b){ target(b); multiBullet("flak_arc", 12, wepMap["MiniRockets"], b.x, b.y, 0, 1.0, 2 * M_PI, 0.2, b.owner, wepMap["MIRV"]); detonateBullet(b); },
-
-        up: function (b){ if (b.tmp != -1) trace_player(b, b.tmp, 2.0, 40, 15); }
-
+        arc: function (b){ multiBullet("flak_arc", 12, wepMap["MiniRockets"], b.x, b.y, 0, 1.0, 2 * M_PI, 0.2, b.owner, wepMap["MIRV"]); detonateBullet(b); },
+    
     },
     {
 
@@ -147,6 +145,22 @@ function defWeapons(){
         grav: 0.2,
 
         up: function (b){ if (b.life % 10 == 0) createBullet(wepMap["Frag"], b.x, b.y, 0, 0, b.owner, wepMap["Carpet Bomb"]); }
+
+    },
+    {
+
+        name: "Fireworks",
+        rld: 100,
+        col: '#FF42D9',
+        rad: 0,
+        dmg_rad: 5,
+        dmg: 10,
+        scatter: 0.05,
+        upt: 2,
+        life: 200,
+        grav: 0.5,
+
+        arc: function (b){ target(b); multiBullet("flak", 15, wepMap["Autocannon"], b.x, b.y, 0, 2.0, 2 * M_PI, 0.8, b.owner, wepMap["Fireworks"]); detonateBullet(b); },
 
     }
     ]; 
