@@ -73,7 +73,7 @@ function normal(p){
             } while (weapons[p.wep].noAI)
 
             p.rld = p.store = 0;
-            p.ticks = Math.min(weapons[p.wep].rld + 10, p.ticks);
+            p.ticks = Math.max(weapons[p.wep].rld + 10, p.ticks);
 
         } 
 
