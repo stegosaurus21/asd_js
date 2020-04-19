@@ -89,7 +89,7 @@ function init(){
         window.onkeyup = keyUp;
         window.onkeypress = keyPress;
 
-        addLog("Welcome to ASD_js! Use A/D to move, W/S to adjust power, Q/E to adjust angle, Z/X to change weapon.");
+        addLog("Welcome to ASD_js! Use A/D to move, W/S to adjust power, Q/E to adjust angle, Z/X to change weapon, Space to fire.");
         addLog("Works best (only works?) with Chrome.");
 
         document.getElementById("newAI").onclick = newAI;
