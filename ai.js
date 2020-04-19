@@ -66,7 +66,15 @@ function normal(p){
         if (p.state <= 2) p.ticks = Math.floor(Math.random() * 50);
         else p.ticks = 100 + Math.floor(Math.random() * 100);
 
-        if (p.state == 3) p.wep = Math.floor(Math.random() * weapons.length)
+        if (p.state == 3) {
+
+            do {
+                p.wep = Math.floor(Math.random() * weapons.length)
+            } while (weapons[p.wep].noAI)
+
+            p.rld = p.store = 0;
+
+        } 
 
     }
 

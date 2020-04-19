@@ -10,6 +10,8 @@ const SCR_W = 800;
 const SCR_H = 600;
 const BACKS = 1;
 
+const tick_int = 20;
+
 // Objects
 var game = {
     players: [],
@@ -79,7 +81,6 @@ function init(){
         defWeapons();
 
         game.players.push(newPlayer(255, 255, 0));
-        initAI(game.players[0], "normal");
         game.players.push(newPlayer(0, 255, 0));
         initAI(game.players[1], "normal");
         
@@ -87,7 +88,9 @@ function init(){
         window.onkeyup = keyUp;
         window.onkeypress = keyPress;
 
-        setInterval(mainLoop, 20);
+        addLog("Welcome to ASD_js! Use A/D to move, W/S to adjust power, Q/E to adjust angle, Z/X to change weapon.");
+
+        setInterval(mainLoop, tick_int);
 
     });
 

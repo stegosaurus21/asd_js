@@ -29,7 +29,7 @@ function defWeapons(){
         dmg: 15,
         scatter: 0.1,
 
-        spawn: function (x, y, ang, vel){ multiBullet("flak", 7, 2, x, y, ang, vel, 0.05, 0.3); }
+        spawn: function (x, y, ang, vel, owner){ multiBullet("flak", 7, 2, x, y, ang, vel, 0.05, 0.3, owner); }
 
     },
     {
@@ -56,7 +56,8 @@ function defWeapons(){
         store_rld: 5,
         upt: 2,
         life: 50,
-        grav: 0.5
+        grav: 0.5,
+        noAI: true
     },
     {
 
@@ -128,7 +129,7 @@ function defWeapons(){
         trace_vx: 0.08,
         trace_vy: 0.06,
 
-        arc: function (b){ target(b); multiBullet("flak_arc", 12, 7, b.x, b.y, 0, 1.0, 2 * M_PI, 0.2); detonateBullet(b); },
+        arc: function (b){ target(b); multiBullet("flak_arc", 12, 7, b.x, b.y, 0, 1.0, 2 * M_PI, 0.2, b.owner); detonateBullet(b); },
 
         up: function (b){ if (b.tmp != -1) trace_player(b, b.tmp, 2.0, 40, 15); }
 
@@ -136,7 +137,7 @@ function defWeapons(){
     {
 
         name: "Carpet Bomb",
-        rld: 300,
+        rld: 500,
         col: '#B200B2',
         rad: 0,
         dmg_rad: 0,

@@ -60,7 +60,7 @@ function createBullet(w, x, y, ang, vel, owner, first){
     var r_ang = 0;
     var wep = weapons[w];
     if (wep.scatter) r_ang = (Math.random() * wep.scatter * 2) - wep.scatter;
-    if (first && wep.spawn) wep.spawn(x, y, ang + r_ang, vel); 
+    if (first && wep.spawn) wep.spawn(x, y, ang + r_ang, vel, owner); 
 
     if (game.free_bullets.length == 0) {
 
@@ -136,7 +136,7 @@ function detonateBullet(b) {
 
         if (distLessThan(b.x, b.y, p.x, p.y + tank_img.height / 2, wep.dmg_rad)) {
 
-            damagePlayer(p, wep.dmg);
+            damagePlayer(p, b);
             b.hit = true;
 
         }
@@ -154,13 +154,13 @@ function freeBullet(b) {
 
 }
 
-function multiBullet(mode, n, wep, x, y, ang, vel, d_ang, d_vel) {
+function multiBullet(mode, n, wep, x, y, ang, vel, d_ang, d_vel, owner) {
 
     if (mode == "flak" || mode == "flak_arc") {
 
         for (var i = 0; i < n; i++) { 
 
-            var b = createBullet(wep, x, y, ang + Math.random() * d_ang - d_ang / 2.0, vel + Math.random() * d_vel - d_vel / 2.0, b.owner, false); 
+            var b = createBullet(wep, x, y, ang + Math.random() * d_ang - d_ang / 2.0, vel + Math.random() * d_vel - d_vel / 2.0, owner, false); 
             if (mode == "flak_arc") weapons[wep].arc(game.bullets[b]);
         
         }
@@ -202,7 +202,6 @@ function target(b){
 
         if (d == -1 || distSquared(b.x, b.y, p.x, p.y) <= d || distSquared(b.x, b.y, p.x + SCR_W, p.y) <= d || distSquared(b.x, b.y, p.x - SCR_W, p.y) <= d) {
 
-            // b.grav = false;
             b.tmp = p.id;
             d = Math.min(distSquared(b.x, b.y, p.x, p.y), distSquared(b.x, b.y, p.x - SCR_W, p.y), distSquared(b.x, b.y, p.x + SCR_W, p.y));
 

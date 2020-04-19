@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>ASD_js</title>
         <script src="func.js"></script>
         <script src="events.js"></script>
         <script src="weapons.js"></script>
@@ -11,8 +12,17 @@
         <script src="map.js"></script>
         <script src="main.js"></script>
         <style>
+            body,html{
+                width:100%;
+                margin:0;
+            }
             img{
                 display: none;
+            }
+            p{
+                font-family: sans-serif;      
+                margin-block-start: 0em;
+                margin-block-end: 0.5em;          
             }
         </style>
     </head>
@@ -20,6 +30,10 @@
         <img src="bullet.png"></img>
         <img src="bullet_s.png"></img>
         <img src="tank.png"></img>
-        <canvas id="main" width=800 height=800></canvas>
+        <div style="display:flex; flex-direction: row; width:100%">
+            <canvas id="main" width=800 height=680 style="flex: 0 0 800px; padding:10px"></canvas>
+            <div class="log" style="flex:1 1 50%; padding-top: 10px"></div>
+        </div>
+        <div class="scoreboard" style="padding-left:10px"></div>
     </body>
 </html>

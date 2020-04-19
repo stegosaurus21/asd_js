@@ -2,7 +2,7 @@ function updatePlayers(){
     
     for (let p of game.players) {
 
-        if (checkPixel(p.x, p.y, b_g)) p.y += 3;
+        if (checkPixel(p.x, p.y, b_g)) p.y ++;
         else if (!checkPixel(p.x, p.y - 1, b_g) && p.y < canvas.height - tank_img.height) p.y --;
 
         if (p.id == 0) {
@@ -50,13 +50,17 @@ function updatePlayers(){
 
 }
 
-function damagePlayer(p, amt) {
+function damagePlayer(p, b) {
 
     if (p.inv > 0) return;
 
-    p.hp -= amt;
+    p.hp -= weapons[b.wep].dmg;
 
     if (p.hp <= 0) {
+
+        game.players[b.owner].kills ++;
+        updateScoreboard(b.owner);
+        addLogKill(b.owner, b.wep, p.id);
 
         killPlayer(p);
 
@@ -67,9 +71,24 @@ function damagePlayer(p, amt) {
 function killPlayer(p){
 
     p.hp = p_max_hp;
-    p.y = 0;
     p.x = Math.random() * SCR_W;
+
+    var imgData = b_g.getImageData(p.x, 0, 1, SCR_H).data;
+    for (var i = 0;i < SCR_H;i++) {
+
+        if (imgData[i * 4] + imgData[i * 4 + 1] + imgData[i * 4 + 2] > 0) {
+
+            p.y = i - 15;
+            break;
+
+        }
+
+    }
+
     p.inv = 60;
+    p.store = p.rld = 0;
+
+    p.deaths ++;
 
 }
 
@@ -86,14 +105,28 @@ function playerFire(p){
 
     }
 
+    updateScoreboard(p.id);
+
 }
 
 function newPlayer(r, g, b){
 
     var p = {};
 
-    p.y = 0;
     p.x = Math.random() * SCR_W;
+
+    var imgData = b_g.getImageData(p.x, 0, 1, SCR_H).data;
+    for (var i = 0;i < SCR_H;i++) {
+
+        if (imgData[i * 4] + imgData[i * 4 + 1] + imgData[i * 4 + 2] > 0) {
+
+            p.y = i - 15;
+            break;
+
+        }
+
+    }
+
     p.rld = 0;
     p.hp = p_max_hp;
     p.ang = 0;
@@ -105,6 +138,7 @@ function newPlayer(r, g, b){
     p.store_rld = 0;
     p.kills = 0;
     p.deaths = 0;
+    p.r = r; p.g = g; p.b = b;
 
     p.img = document.createElement("canvas");
     p.img.style.display = "none";
@@ -136,6 +170,18 @@ function newPlayer(r, g, b){
 
     tr.putImageData(dat, 0, 0);
 
+    p.scoreDisplay = document.createElement("p");
+    p.nameSpan = document.createElement("span");
+    p.infoSpan = document.createElement("span");
+
+    p.nameSpan.style.color = "rgba(" + Math.max(r - 20, 0) + "," + Math.max(g - 20, 0) + "," + Math.max(b - 20, 0) + ",255)"
+    p.nameSpan.innerText = "Player " + p.id;
+    p.infoSpan.innerText = " | K: 0 | D: 0 | K/D: 0"
+
+    p.scoreDisplay.appendChild(p.nameSpan);
+    p.scoreDisplay.appendChild(p.infoSpan);
+    document.querySelector("div.scoreboard").appendChild(p.scoreDisplay)
+
     return p;
 
 }
@@ -145,8 +191,7 @@ function subWep(id){
     if (game.players[id].wep == 0) game.players[id].wep = weapons.length;
     game.players[id].wep --;
 
-    game.players[id].rld = 0;
-    game.players[id].store = 0;
+    game.players[id].rld = game.players[id].store = 0;
 
 }
 
@@ -155,7 +200,6 @@ function addWep(id){
     game.players[id].wep ++;
     if (game.players[id].wep == weapons.length) game.players[id].wep = 0;
 
-    game.players[id].rld = 0;
-    game.players[id].store = 0;
+    game.players[id].rld = game.players[id].store = 0;
 
 }

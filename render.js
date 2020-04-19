@@ -85,3 +85,55 @@ function render(){
     
 
 }
+
+function updateScoreboard(id) {
+
+    game.players[id].infoSpan.innerText = " | K: " + game.players[id].kills + " | D: " + game.players[id].deaths + " | K/D: " + Math.trunc(game.players[id].kills / Math.max(game.players[id].deaths, 1) * 100) / 100;
+
+}
+
+function addLog(text, fadeout = 800) {
+
+    var el_p = document.createElement("p");
+    el_p.innerText = text;
+    document.querySelector("div.log").appendChild(el_p);
+
+    var log_timer = setInterval(()=>{
+
+        fadeElement(el_p);
+        clearInterval(log_timer);
+
+    }, fadeout * tick_int);
+
+}
+
+function addLogKill(id1, wep, id2, fadeout = 200) {
+
+    var el_p = document.createElement("p");
+    var el_s1 = document.createElement("span");
+    var el_s2 = document.createElement("span");
+    var el_s3 = document.createElement("span");
+
+    el_s1.style.color = "rgba(" + Math.max(game.players[id1].r - 30, 0) + "," + Math.max(game.players[id1].g - 30, 0) + "," + Math.max(game.players[id1].b - 30, 0) + ",255)";
+    el_s2.style.color = weapons[wep].col;
+    el_s3.style.color = "rgba(" + Math.max(game.players[id2].r - 30, 0) + "," + Math.max(game.players[id2].g - 30, 0) + "," + Math.max(game.players[id2].b - 30, 0) + ",255)";
+
+    el_s1.innerText = "Player " + id1;
+    el_s2.innerText = " " + weapons[wep].name + "'d ";
+    if (id1 == id2) el_s3.innerText = " themself"    
+    else el_s3.innerText = "Player " + id2;
+
+    el_p.appendChild(el_s1);
+    el_p.appendChild(el_s2);
+    el_p.appendChild(el_s3);
+
+    document.querySelector("div.log").appendChild(el_p);
+
+    var log_timer = setInterval(()=>{
+
+        fadeElement(el_p);
+        clearInterval(log_timer);
+
+    }, fadeout * tick_int);
+
+}
