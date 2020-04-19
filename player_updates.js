@@ -68,7 +68,7 @@ function damagePlayer(p, b) {
 
 }
 
-function killPlayer(p){
+function killPlayer(p, addKill = true){
 
     p.hp = p_max_hp;
     p.x = Math.random() * SCR_W;
@@ -88,7 +88,7 @@ function killPlayer(p){
     p.inv = 60;
     p.store = p.rld = 0;
 
-    p.deaths ++;
+    if (addKill) p.deaths ++;
 
 }
 
@@ -114,19 +114,7 @@ function newPlayer(r, g, b){
     var p = {};
 
     p.x = Math.random() * SCR_W;
-
-    var imgData = b_g.getImageData(p.x, 0, 1, SCR_H).data;
-    for (var i = 0;i < SCR_H;i++) {
-
-        if (imgData[i * 4] + imgData[i * 4 + 1] + imgData[i * 4 + 2] > 0) {
-
-            p.y = i - 15;
-            break;
-
-        }
-
-    }
-
+    p.y = 0;
     p.rld = 0;
     p.hp = p_max_hp;
     p.ang = 0;
@@ -181,6 +169,8 @@ function newPlayer(r, g, b){
     p.scoreDisplay.appendChild(p.nameSpan);
     p.scoreDisplay.appendChild(p.infoSpan);
     document.querySelector("div.scoreboard").appendChild(p.scoreDisplay)
+
+    killPlayer(p, false);
 
     return p;
 
