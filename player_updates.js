@@ -60,7 +60,7 @@ function damagePlayer(p, b) {
 
         game.players[b.owner].kills ++;
         updateScoreboard(b.owner);
-        addLogKill(b.owner, b.wep, p.id);
+        addLogKill(b.owner, ((b.parent == -1) ? b.wep : b.parent), p.id);
 
         killPlayer(p);
 
@@ -98,7 +98,7 @@ function playerFire(p){
 
     if (p.rld >= wep.rld && (!wep.store || p.store > 0)) {
 
-        createBullet(p.wep, p.x, p.y - 2, p.ang, p.vel, p.id, true);
+        createBullet(p.wep, p.x, p.y - 2, p.ang, p.vel, p.id, -1, true);
 
         if (p.store > 0) p.store --;
         p.rld = 0;

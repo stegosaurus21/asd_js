@@ -55,7 +55,7 @@ function updateBullets(){
 
 }
 
-function createBullet(w, x, y, ang, vel, owner, first){
+function createBullet(w, x, y, ang, vel, owner, parent, first){
 
     var r_ang = 0;
     var wep = weapons[w];
@@ -69,6 +69,7 @@ function createBullet(w, x, y, ang, vel, owner, first){
         new_b.owner = owner;
         new_b.state = 1;
         new_b.wep = w;
+        new_b.parent = parent;
         new_b.x = x;
         new_b.y = y;
         new_b.dvx = -1;
@@ -93,6 +94,7 @@ function createBullet(w, x, y, ang, vel, owner, first){
             game.bullets[game.free_bullets[0]].owner = owner;
             game.bullets[game.free_bullets[0]].state = 1;
             game.bullets[game.free_bullets[0]].wep = w;
+            game.bullets[game.free_bullets[0]].parent = parent;
             game.bullets[game.free_bullets[0]].x = x;
             game.bullets[game.free_bullets[0]].y = y;
             game.bullets[game.free_bullets[0]].dvx = -1;
@@ -112,7 +114,7 @@ function createBullet(w, x, y, ang, vel, owner, first){
         } catch {
 
             game.free_bullets.shift();
-            createBullet(w, x, y, ang, vel, owner, first);
+            createBullet(w, x, y, ang, vel, owner, parent, first);
 
         }
 
@@ -154,13 +156,13 @@ function freeBullet(b) {
 
 }
 
-function multiBullet(mode, n, wep, x, y, ang, vel, d_ang, d_vel, owner) {
+function multiBullet(mode, n, wep, x, y, ang, vel, d_ang, d_vel, owner, parent) {
 
     if (mode == "flak" || mode == "flak_arc") {
 
         for (var i = 0; i < n; i++) { 
 
-            var b = createBullet(wep, x, y, ang + Math.random() * d_ang - d_ang / 2.0, vel + Math.random() * d_vel - d_vel / 2.0, owner, false); 
+            var b = createBullet(wep, x, y, ang + Math.random() * d_ang - d_ang / 2.0, vel + Math.random() * d_vel - d_vel / 2.0, owner, parent, false); 
             if (mode == "flak_arc") weapons[wep].arc(game.bullets[b]);
         
         }
@@ -173,7 +175,7 @@ function frag(mode, n, wep, vel, b) {
 
     if (mode == "basic") {
 
-        for (var i = 0; i < n; i++) { createBullet(wep, b.x, b.y, Math.random() * 2 * M_PI, Math.random() * vel, b.owner, false); }
+        for (var i = 0; i < n; i++) { createBullet(wep, b.x, b.y, Math.random() * 2 * M_PI, Math.random() * vel, b.owner, ((b.parent == -1) ? b.wep : b.parent), false); }
 
     }
 
@@ -181,7 +183,7 @@ function frag(mode, n, wep, vel, b) {
 
         var k = (b.vy > 0) ? -M_PI / 2 : M_PI / 2;
         
-        for (var i = 0;i < n; i++) { createBullet(wep, b.x, b.y, k + (Math.random() * M_PI) - M_PI / 2.0, Math.random() * vel, b.owner, false); }
+        for (var i = 0;i < n; i++) { createBullet(wep, b.x, b.y, k + (Math.random() * M_PI) - M_PI / 2.0, Math.random() * vel, b.owner, ((b.parent == -1) ? b.wep : b.parent), false); }
 
     }
 
@@ -189,7 +191,7 @@ function frag(mode, n, wep, vel, b) {
 
         var k = (b.vy > 0) ? -M_PI / 2 : M_PI / 2;
         
-        for (var i = 0;i < n; i++) { createBullet(wep, b.x, b.y, k + (Math.random() * M_PI / 6.0) - M_PI / 12.0, Math.random() * vel, b.owner, false); }
+        for (var i = 0;i < n; i++) { createBullet(wep, b.x, b.y, k + (Math.random() * M_PI / 6.0) - M_PI / 12.0, Math.random() * vel, b.owner, ((b.parent == -1) ? b.wep : b.parent), false); }
 
     }
 

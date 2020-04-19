@@ -21,6 +21,7 @@ var game = {
 }
 
 var weapons = [];
+var wepMap = {};
 var wait = {};
 
 // Canvases

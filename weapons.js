@@ -29,7 +29,7 @@ function defWeapons(){
         dmg: 15,
         scatter: 0.1,
 
-        spawn: function (x, y, ang, vel, owner){ multiBullet("flak", 7, 2, x, y, ang, vel, 0.05, 0.3, owner); }
+        spawn: function (x, y, ang, vel, owner){ multiBullet("flak", 7, wepMap["Flak"], x, y, ang, vel, 0.05, 0.3, owner, -1); }
 
     },
     {
@@ -41,7 +41,7 @@ function defWeapons(){
         dmg: 15,
         scatter: 0.05,
 
-        detonate: function (b){ frag("updown", 5, 2, 1.5, b); frag("updown", 8, 1, 2.0, b); }
+        detonate: function (b){ frag("updown", 5, wepMap["Flak"], 1.5, b); frag("updown", 8, wepMap["Autocannon"], 2.0, b); }
 
     },
     {
@@ -69,7 +69,7 @@ function defWeapons(){
         dmg: 10,
         scatter: 0.1,
 
-        detonate: function (b){ frag("updown30", 20, 4, 2.0, b); }
+        detonate: function (b){ frag("updown30", 20, wepMap["Minigun"], 2.0, b); }
 
     },
     {
@@ -129,7 +129,7 @@ function defWeapons(){
         trace_vx: 0.08,
         trace_vy: 0.06,
 
-        arc: function (b){ target(b); multiBullet("flak_arc", 12, 7, b.x, b.y, 0, 1.0, 2 * M_PI, 0.2, b.owner); detonateBullet(b); },
+        arc: function (b){ target(b); multiBullet("flak_arc", 12, wepMap["MiniRockets"], b.x, b.y, 0, 1.0, 2 * M_PI, 0.2, b.owner, wepMap["MIRV"]); detonateBullet(b); },
 
         up: function (b){ if (b.tmp != -1) trace_player(b, b.tmp, 2.0, 40, 15); }
 
@@ -146,8 +146,11 @@ function defWeapons(){
         life: 150,
         grav: 0.2,
 
-        up: function (b){ if (b.life % 10 == 0) createBullet((Math.random() > 0.5 ? 3 : 5), b.x, b.y, 0, 0, b.owner); }
+        up: function (b){ if (b.life % 10 == 0) createBullet(wepMap["Frag"], b.x, b.y, 0, 0, b.owner, wepMap["Carpet Bomb"]); }
 
     }
+    ]; 
 
-]; }
+    for (var i = 0; i < weapons.length; i++) wepMap[weapons[i].name] = i;
+
+}
