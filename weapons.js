@@ -11,13 +11,13 @@ function defWeapons(){
     },
     {
         name: "Autocannon",
-        rld: 8,
+        rld: 7,
         col: '#A3A3A3',
         rad: 2,
         dmg_rad: 7,
-        dmg: 15,
+        dmg: 10,
         store: 10,
-        store_rld: 15,
+        store_rld: 14,
         scatter: 0.1
     },
     {
@@ -51,12 +51,12 @@ function defWeapons(){
         rad: 2,
         dmg_rad: 6,
         dmg: 7,
-        scatter: 0.15,
+        scatter: 0.08,
         store: 20,
         store_rld: 5,
         upt: 2,
         life: 50,
-        grav: 0.5,
+        grav: 0.2,
         noAI: true
     },
     {

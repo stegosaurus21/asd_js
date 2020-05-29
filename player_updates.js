@@ -15,6 +15,16 @@ function updatePlayers(){
             if (keys["Space"]) playerFire(p);
         }
 
+        if (p.id == otherHumanID) {
+            if (keys["KeyJ"]) p.x -= p_speed;
+            if (keys["KeyL"]) p.x += p_speed;
+            if (keys["KeyI"]) p.vel += p_delta_vel;
+            if (keys["KeyK"]) p.vel -= p_delta_vel;
+            if (keys["KeyU"]) p.ang -= p_delta_ang;
+            if (keys["KeyO"]) p.ang += p_delta_ang;
+            if (keys["Semicolon"]) playerFire(p);
+        }
+
         p.ang = Math.max(p.ang, -M_PI);
         p.ang = Math.min(p.ang, 0);
         p.vel = Math.max(p.vel, 0);
@@ -132,6 +142,7 @@ function newPlayer(r, g, b){
     p.img.style.display = "none";
     p.img.width = 10;
     p.img.height = 6;
+
     var tr = p.img.getContext("2d");
     tr.imageSmoothingEnabled = false;
     tr.mozImageSmoothingEnabled = false;
@@ -199,5 +210,23 @@ function newAI(){
     if (game.players.length >= 5) document.getElementById("newAI").remove();
     game.players.push(newPlayer(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)));
     initAI(game.players[game.players.length - 1], "normal");
+
+}
+
+function newHuman(){
+
+    addLog("Welcome player 2! Use J/L to move, I/K to adjust power, U/O to adjust angle, N/M to change weapon, and ; to fire.")
+
+    document.getElementById("newHuman").remove();
+    game.players.push(newPlayer(0, 255, 0));
+    initHuman(game.players[game.players.length - 1])
+    otherHumanID = game.players.length - 1;
+
+}
+
+function initHuman(p){
+
+    p.isHuman = true;
+    p.nameSpan.innerText = p.nameSpan.innerText + " (Human)";
 
 }

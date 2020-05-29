@@ -1,5 +1,7 @@
 function initAI(p, mode, diff = 0.5) {
 
+    p.nameSpan.innerText = p.nameSpan.innerText + " (AI - " + mode + ")";
+
     p.mode = mode;
     p.isAI = true;
     p.target = null;

@@ -28,30 +28,35 @@ function render(){
         r_g.closePath();
         r_g.stroke();
 
-        if (p.id == 0) {
+        if (p.id == 0 || p.id == otherHumanID) {
+
+            var delta = 0;
+            if (p.id == otherHumanID) {
+                delta = 695;
+            }
 
             r_g.font = "12px sans-serif";
             r_g.fillStyle = '#000000';
-            r_g.fillText(wep.name, 5, 615);
+            r_g.fillText(wep.name, delta + 5, 615);
             r_g.font = "10px sans-serif";
-            r_g.fillText("HP: ", 5, 628);
-            r_g.fillText("Power: ", 5, 638)
+            r_g.fillText("HP: ", delta + 5, 628);
+            r_g.fillText("Power: ", delta + 5, 638)
 
             r_g.fillStyle = '#FF0000';
-            r_g.fillRect(50, 618, Math.floor(p.hp / 2), 10);
+            r_g.fillRect(delta + 50, 618, Math.floor(p.hp / 2), 10);
 
             r_g.fillStyle = wep.col;
-            r_g.fillRect(50, 628, Math.floor(p.vel * 10), 10);
+            r_g.fillRect(delta + 50, 628, Math.floor(p.vel * 10), 10);
 
             if (wep.store) {
 
-                for (var i = 0;i < p.store;i++) r_g.drawImage(bullet_s_img, 5 + 5 * i, 641);
+                for (var i = 0;i < p.store;i++) r_g.drawImage(bullet_s_img, delta + 5 + 5 * i, 641);
                 if (p.store < wep.store) {
                     var f_amt = p.store_rld / wep.store_rld * 20
-                    r_g.drawImage(bullet_s_img, 0, 20 - f_amt, 5, f_amt, 5 + 5 * p.store, 661 - f_amt, 5, f_amt);
+                    r_g.drawImage(bullet_s_img, 0, 20 - f_amt, 5, f_amt, delta + 5 + 5 * p.store, 661 - f_amt, 5, f_amt);
                 } 
 
-            } else r_g.drawImage(bullet_img, 0, 0, p.rld / wep.rld * 100, 20, 5, 641, p.rld / wep.rld * 100, 20);
+            } else r_g.drawImage(bullet_img, 0, 0, p.rld / wep.rld * 100, 20, delta + 5, 641, p.rld / wep.rld * 100, 20);
 
         }
 
